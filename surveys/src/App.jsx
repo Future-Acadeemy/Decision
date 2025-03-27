@@ -13,6 +13,7 @@ import Report from "./pages/Report";
 import DecisionMatrix from "./components/DecisionMatrix";
 import Home from "./components/Home";
 import Login from "./pages/Login";
+
 const queryClient = new QueryClient(); // Create QueryClient instance
 
 const App = () => {
