@@ -19,16 +19,6 @@ const App = () => {
   const [userInfo, setUserInfo] = useState(null);
 
   return (
-    // <Layout>
-    //   {!userInfo ? (
-    //     <UserInfoForm onSubmit={setUserInfo} />
-    //   ) : (
-    //     <Survey userInfo={userInfo} />
-    //   )}
-    //   {/* <Survey userInfo={userInfo} /> */}
-    // </Layout>
-    // <Registeration />
-    // <SurveyForm />
     <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
@@ -41,9 +31,6 @@ const App = () => {
         </Routes>
       </Router>
     </QueryClientProvider>
-
-    // <DecisionMatrix />
-    // <Home />
   );
 };
 
