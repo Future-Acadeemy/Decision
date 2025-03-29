@@ -14,6 +14,8 @@ import DecisionMatrix from "./components/DecisionMatrix";
 import Home from "./components/Home";
 import Login from "./pages/Login";
 
+//npx tailwindcss -i ./src/index.css -o ./dist/output.css --watch
+
 const queryClient = new QueryClient(); // Create QueryClient instance
 
 const App = () => {

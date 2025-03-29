@@ -3,8 +3,10 @@ import React, { useState } from "react";
 const DecisionMatrix = () => {
   const [decision1, setDecision1] = useState("");
   const [decision2, setDecision2] = useState("");
-  const [matrix, setMatrix] = useState(Array(5).fill(Array(8).fill("")));
+  const [matrix, setMatrix] = useState(Array(4).fill(Array(8).fill("")));
   const [totals, setTotals] = useState({ decision1: 0, decision2: 0 });
+  const [columnSums, setColumnSums] = useState(Array(4).fill(0));
+
   const [decision, setDecision] = useState("");
   const [formula, setFormula] = useState([]);
 
@@ -15,9 +17,26 @@ const DecisionMatrix = () => {
         : row
     );
     setMatrix(newMatrix);
+    updateColumnSums(newMatrix);
+  };
+
+  const updateColumnSums = (matrix) => {
+    const sums = [0, 0, 0, 0];
+    matrix.forEach((row) => {
+      sums[0] += parseFloat(row[1]) || 0;
+      sums[1] += parseFloat(row[3]) || 0;
+      sums[2] += parseFloat(row[5]) || 0;
+      sums[3] += parseFloat(row[7]) || 0;
+    });
+    setColumnSums(sums);
   };
 
   const calculateTotals = () => {
+    const decision_1_AdvantagesSum = columnSums[0];
+    const decision_1_DisadvantagesSum = columnSums[1];
+    const decision_2_AdvantagesSum = columnSums[2];
+    const decision_2_DisadvantagesSum = columnSums[3];
+
     let sumDecision1 = 0;
     let sumDecision2 = 0;
     let criterion1 = 0;
@@ -25,28 +44,26 @@ const DecisionMatrix = () => {
     let criterion3 = 0;
     let criterion4 = 0;
 
-    matrix.forEach((row) => {
-      const adv1 = parseFloat(row[1]) || 0;
-      const dis1 = parseFloat(row[3]) || 0;
-      const adv2 = parseFloat(row[5]) || 0;
-      const dis2 = parseFloat(row[7]) || 0;
+    criterion1 += decision_1_AdvantagesSum - decision_1_DisadvantagesSum;
+    criterion2 += decision_2_AdvantagesSum - decision_2_DisadvantagesSum;
+    criterion3 += decision_1_AdvantagesSum - decision_2_AdvantagesSum;
+    criterion4 += decision_2_DisadvantagesSum - decision_1_DisadvantagesSum;
 
-      sumDecision1 += adv1 - dis1;
-      sumDecision2 += adv2 - dis2;
+    console.log("sumDecision1 --> ", sumDecision1);
+    console.log("sumDecision2 --> ", sumDecision2);
 
-      criterion1 += adv1 - dis1;
-      criterion2 += adv2 - dis2;
-      criterion3 += adv1 - adv2;
-      criterion4 += dis2 - dis1;
-    });
+    console.log("criterion1 --> ", criterion1);
+    console.log("criterion2 --> ", criterion2);
+    console.log("criterion3 --> ", criterion3);
+    console.log("criterion4 --> ", criterion4);
 
     setTotals({ decision1: sumDecision1, decision2: sumDecision2 });
 
     setFormula([
-      `Criterion 1: ${criterion1} → (Sum of Advantages - Disadvantages for Decision 1)`,
-      `Criterion 2: ${criterion2} → (Sum of Advantages - Disadvantages for Decision 2)`,
-      `Criterion 3: ${criterion3} → (Sum of Advantages of Decision 1 - Advantages of Decision 2)`,
-      `Criterion 4: ${criterion4} → (Sum of Disadvantages of Decision 2 - Disadvantages of Decision 1)`,
+      `Results of Criterion 1 = ${criterion1} → (Sum of Advantages - Disadvantages for Decision 1)`,
+      `Results of Criterion 2 = ${criterion2} → (Sum of Advantages - Disadvantages for Decision 2)`,
+      `Results of Criterion 3 = ${criterion3} → (Sum of Advantages of Decision 1 - Advantages of Decision 2)`,
+      `Results of Criterion 4 = ${criterion4} → (Sum of Disadvantages of Decision 2 - Disadvantages of Decision 1)`,
     ]);
 
     let agreeCount = 0;
@@ -54,6 +71,8 @@ const DecisionMatrix = () => {
     if (criterion2 > 0) agreeCount++;
     if (criterion3 > 0) agreeCount++;
     if (criterion4 > 0) agreeCount++;
+
+    console.log("agreeCount ===> ", agreeCount);
 
     if (agreeCount >= 3) {
       setDecision("Decision 1 is preferable");
@@ -165,6 +184,16 @@ const DecisionMatrix = () => {
                   ))}
                 </tr>
               ))}
+              <tr className="bg-blue-200 text-gray-800 text-center font-bold ">
+                <td className="border-gray-300 px-4 py-3">Total</td>
+                <td className="border-gray-300 px-4 py-3">{columnSums[0]}</td>
+                <td className="border-gray-300 px-4 py-3"></td>
+                <td className="border-gray-300 px-4 py-3">{columnSums[1]}</td>
+                <td className="border-gray-300 px-4 py-3"></td>
+                <td className="border-gray-300 px-4 py-3">{columnSums[2]}</td>
+                <td className="border-gray-300 px-4 py-3"></td>
+                <td className="border-gray-300 px-4 py-3">{columnSums[3]}</td>
+              </tr>
             </tbody>
           </table>
         </div>
