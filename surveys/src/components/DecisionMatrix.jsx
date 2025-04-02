@@ -23,10 +23,10 @@ const DecisionMatrix = () => {
   const updateColumnSums = (matrix) => {
     const sums = [0, 0, 0, 0];
     matrix.forEach((row) => {
-      sums[0] += parseFloat(row[1]) || 0;
-      sums[1] += parseFloat(row[3]) || 0;
-      sums[2] += parseFloat(row[5]) || 0;
-      sums[3] += parseFloat(row[7]) || 0;
+      sums[0] += (parseFloat(row[1]) / 40) * 100 || 0;
+      sums[1] += (parseFloat(row[3]) / 40) * 100 || 0;
+      sums[2] += (parseFloat(row[5]) / 40) * 100 || 0;
+      sums[3] += (parseFloat(row[7]) / 40) * 100 || 0;
     });
     setColumnSums(sums);
   };
@@ -49,13 +49,13 @@ const DecisionMatrix = () => {
     criterion3 += decision_1_AdvantagesSum - decision_2_AdvantagesSum;
     criterion4 += decision_2_DisadvantagesSum - decision_1_DisadvantagesSum;
 
-    console.log("sumDecision1 --> ", sumDecision1);
-    console.log("sumDecision2 --> ", sumDecision2);
+    // console.log("sumDecision1 --> ", sumDecision1);
+    // console.log("sumDecision2 --> ", sumDecision2);
 
-    console.log("criterion1 --> ", criterion1);
-    console.log("criterion2 --> ", criterion2);
-    console.log("criterion3 --> ", criterion3);
-    console.log("criterion4 --> ", criterion4);
+    // console.log("criterion1 --> ", criterion1);
+    // console.log("criterion2 --> ", criterion2);
+    // console.log("criterion3 --> ", criterion3);
+    // console.log("criterion4 --> ", criterion4);
 
     setTotals({ decision1: sumDecision1, decision2: sumDecision2 });
 
@@ -74,9 +74,17 @@ const DecisionMatrix = () => {
 
     console.log("agreeCount ===> ", agreeCount);
 
-    if (agreeCount >= 3) {
+    // if (agreeCount >= 3) {
+    //   setDecision("Decision 1 is preferable");
+    // } else if (agreeCount <= 1) {
+    //   setDecision("Decision 2 is preferable");
+    // } else {
+    //   setDecision("Both decisions have close values, reconsider inputs");
+    // }
+
+    if (criterion1 > criterion2 && criterion3 >= 0) {
       setDecision("Decision 1 is preferable");
-    } else if (agreeCount <= 1) {
+    } else if ((criterion3 < 0 || criterion4 < 0) && criterion2 >= criterion1) {
       setDecision("Decision 2 is preferable");
     } else {
       setDecision("Both decisions have close values, reconsider inputs");
@@ -169,6 +177,12 @@ const DecisionMatrix = () => {
                           <option value="2">2</option>
                           <option value="3">3</option>
                           <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
                         </select>
                       ) : (
                         <input
@@ -185,14 +199,14 @@ const DecisionMatrix = () => {
                 </tr>
               ))}
               <tr className="bg-blue-200 text-gray-800 text-center font-bold ">
-                <td className="border-gray-300 px-4 py-3">Total</td>
-                <td className="border-gray-300 px-4 py-3">{columnSums[0]}</td>
+                <td className="border-gray-300 px-4 py-3">Total percentage</td>
+                <td className="border-gray-300 px-4 py-3">{columnSums[0]} %</td>
                 <td className="border-gray-300 px-4 py-3"></td>
-                <td className="border-gray-300 px-4 py-3">{columnSums[1]}</td>
+                <td className="border-gray-300 px-4 py-3">{columnSums[1]} %</td>
                 <td className="border-gray-300 px-4 py-3"></td>
-                <td className="border-gray-300 px-4 py-3">{columnSums[2]}</td>
+                <td className="border-gray-300 px-4 py-3">{columnSums[2]} %</td>
                 <td className="border-gray-300 px-4 py-3"></td>
-                <td className="border-gray-300 px-4 py-3">{columnSums[3]}</td>
+                <td className="border-gray-300 px-4 py-3">{columnSums[3]} %</td>
               </tr>
             </tbody>
           </table>
