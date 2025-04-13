@@ -22,13 +22,41 @@ const DecisionMatrix = () => {
 
   const updateColumnSums = (matrix) => {
     const sums = [0, 0, 0, 0];
+    const counts = [0, 0, 0, 0]; // To track how many rows have a value for each respective column
+
     matrix.forEach((row) => {
-      sums[0] += (parseFloat(row[1]) / 40) * 100 || 0;
-      sums[1] += (parseFloat(row[3]) / 40) * 100 || 0;
-      sums[2] += (parseFloat(row[5]) / 40) * 100 || 0;
-      sums[3] += (parseFloat(row[7]) / 40) * 100 || 0;
+      const val1 = parseFloat(row[1]);
+      const val2 = parseFloat(row[3]);
+      const val3 = parseFloat(row[5]);
+      const val4 = parseFloat(row[7]);
+
+      if (!isNaN(val1)) {
+        sums[0] += val1;
+        counts[0]++;
+      }
+
+      if (!isNaN(val2)) {
+        sums[1] += val2;
+        counts[1]++;
+      }
+
+      if (!isNaN(val3)) {
+        sums[2] += val3;
+        counts[2]++;
+      }
+
+      if (!isNaN(val4)) {
+        sums[3] += val4;
+        counts[3]++;
+      }
     });
-    setColumnSums(sums);
+
+    const percentages = sums.map((sum, index) => {
+      const base = counts[index] * 10;
+      return base > 0 ? ((sum / base) * 100).toFixed(2) : 0;
+    });
+
+    setColumnSums(percentages);
   };
 
   const calculateTotals = () => {
