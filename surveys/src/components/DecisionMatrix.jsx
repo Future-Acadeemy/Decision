@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Layout from "../layout/Layout";
+import { useTranslation } from "react-i18next";
 
 const DecisionMatrix = () => {
   const [decision1, setDecision1] = useState("");
@@ -9,6 +11,7 @@ const DecisionMatrix = () => {
 
   const [decision, setDecision] = useState("");
   const [formula, setFormula] = useState([]);
+  const { t, i18n } = useTranslation();
 
   const handleChange = (rowIndex, colIndex, value) => {
     const newMatrix = matrix.map((row, rIdx) =>
@@ -125,143 +128,160 @@ const DecisionMatrix = () => {
   };
 
   return (
-    <div className="w-[90%] mx-auto">
-      <form className="space-y-8" onSubmit={handleSubmit}>
-        {/* Title */}
-        <div className="p-6 bg-white shadow-lg rounded-lg">
-          <h2 className="font-bold text-blue-600 text-3xl text-center leading-tight mb-6">
-            The Advantages and Disadvantages, Positives and Negatives, or Gains
-            and Losses Style Scale:
-            <br />
-            <span className="text-gray-700 text-2xl">
-              Prof. Dr. Hisham Abdelhamid Tohamy
-            </span>
-          </h2>
+    <Layout>
+      <div className="w-[90%] mx-auto">
+        <form className="space-y-8" onSubmit={handleSubmit}>
+          {/* Title */}
+          <div className="p-6 bg-white shadow-lg rounded-lg">
+            <h2 className="font-bold text-blue-600 text-3xl text-center leading-tight mb-6">
+              {t(
+                "The Advantages and Disadvantages, Positives and Negatives, orGains and Losses Style Scale:"
+              )}
+              <br />
+              <span className="text-gray-700 text-2xl">
+                Prof. Dr. Hisham Abdelhamid Tohamy
+              </span>
+            </h2>
 
-          {/* Table */}
-          <table className="w-full border-collapse border border-gray-300 text-left">
-            <thead>
-              <tr className="bg-blue-100 text-gray-800 text-center">
-                <th colSpan="4" className="border border-gray-300 px-4 py-3">
-                  <input
-                    type="text"
-                    value={decision1}
-                    onChange={(e) => setDecision1(e.target.value)}
-                    placeholder="Decision 1"
-                    className="w-full bg-gray-100 text-gray-900 p-2 text-center border border-gray-300 rounded-lg"
-                  />
-                </th>
-                <th colSpan="4" className="border border-gray-300 px-4 py-3">
-                  <input
-                    type="text"
-                    value={decision2}
-                    onChange={(e) => setDecision2(e.target.value)}
-                    placeholder="Decision 2"
-                    className="w-full bg-gray-100 text-gray-900 p-2 text-center border border-gray-300 rounded-lg"
-                  />
-                </th>
-              </tr>
-              <tr className="bg-blue-200 text-gray-800 text-center">
-                <th className="border border-gray-300 px-4 py-3">Advantages</th>
-                <th className="border border-gray-300 px-4 py-3">
-                  Degree (1-4)
-                </th>
-                <th className="border border-gray-300 px-4 py-3">
-                  Disadvantages
-                </th>
-                <th className="border border-gray-300 px-4 py-3">
-                  Degree (1-4)
-                </th>
-                <th className="border border-gray-300 px-4 py-3">Advantages</th>
-                <th className="border border-gray-300 px-4 py-3">
-                  Degree (1-4)
-                </th>
-                <th className="border border-gray-300 px-4 py-3">
-                  Disadvantages
-                </th>
-                <th className="border border-gray-300 px-4 py-3">
-                  Degree (1-4)
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {matrix.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  {row.map((cell, colIndex) => (
-                    <td
-                      key={colIndex}
-                      className="border border-gray-300 px-4 py-3"
-                    >
-                      {colIndex % 2 === 1 ? (
-                        <select
-                          value={cell}
-                          onChange={(e) =>
-                            handleChange(rowIndex, colIndex, e.target.value)
-                          }
-                          className="w-full bg-gray-100 text-gray-900 p-2 text-center border border-gray-300 rounded-lg"
-                        >
-                          <option value="">Select</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="6">6</option>
-                          <option value="7">7</option>
-                          <option value="8">8</option>
-                          <option value="9">9</option>
-                          <option value="10">10</option>
-                        </select>
-                      ) : (
-                        <input
-                          type="text"
-                          value={cell}
-                          onChange={(e) =>
-                            handleChange(rowIndex, colIndex, e.target.value)
-                          }
-                          className="w-full bg-gray-100 text-gray-900 p-2 text-center border border-gray-300 rounded-lg"
-                        />
-                      )}
-                    </td>
-                  ))}
+            {/* Table */}
+            <table className="w-full border-collapse border border-gray-300 text-left">
+              <thead>
+                <tr className="bg-blue-100 text-gray-800 text-center">
+                  <th colSpan="4" className="border border-gray-300 px-4 py-3">
+                    <input
+                      type="text"
+                      value={decision1}
+                      onChange={(e) => setDecision1(e.target.value)}
+                      placeholder={t("Decision 1")}
+                      className="w-full bg-gray-100 text-gray-900 p-2 text-center border border-gray-300 rounded-lg"
+                    />
+                  </th>
+                  <th colSpan="4" className="border border-gray-300 px-4 py-3">
+                    <input
+                      type="text"
+                      value={decision2}
+                      onChange={(e) => setDecision2(e.target.value)}
+                      placeholder={t("Decision 2")}
+                      className="w-full bg-gray-100 text-gray-900 p-2 text-center border border-gray-300 rounded-lg"
+                    />
+                  </th>
                 </tr>
-              ))}
-              <tr className="bg-blue-200 text-gray-800 text-center font-bold ">
-                <td className="border-gray-300 px-4 py-3">Total percentage</td>
-                <td className="border-gray-300 px-4 py-3">{columnSums[0]} %</td>
-                <td className="border-gray-300 px-4 py-3"></td>
-                <td className="border-gray-300 px-4 py-3">{columnSums[1]} %</td>
-                <td className="border-gray-300 px-4 py-3"></td>
-                <td className="border-gray-300 px-4 py-3">{columnSums[2]} %</td>
-                <td className="border-gray-300 px-4 py-3"></td>
-                <td className="border-gray-300 px-4 py-3">{columnSums[3]} %</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        {/* Button */}
-        <div className="flex justify-center">
-          <button className="bg-blue-500 text-white px-8 py-4 rounded-lg text-xl shadow-md hover:bg-blue-600 transition">
-            Calculate
-          </button>
-        </div>
-      </form>
-
-      {/* Decision & Formula Results */}
-      {decision && (
-        <div className="text-center text-xl font-bold mt-6 bg-blue-100 p-5 border border-gray-300 rounded-lg shadow-md mb-6">
-          <p className="text-blue-700 text-2xl mb-3">{decision}</p>
-          <div className="mt-3 space-y-2 text-gray-700 text-lg">
-            {formula.map((line, index) => (
-              <p key={index} className="text-gray-800">
-                {line}
-              </p>
-            ))}
+                <tr className="bg-blue-200 text-gray-800 text-center">
+                  <th className="border border-gray-300 px-4 py-3">
+                    {t("Advantages")}
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3">
+                    {t("Degree")}
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3">
+                    {t("Disadvantages")}
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3">
+                    {t("Degree")}
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3">
+                    {t("Advantages")}
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3">
+                    {t("Degree")}
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3">
+                    {t("Disadvantages")}
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3">
+                    {t("Degree")}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {matrix.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {row.map((cell, colIndex) => (
+                      <td
+                        key={colIndex}
+                        className="border border-gray-300 px-4 py-3"
+                      >
+                        {colIndex % 2 === 1 ? (
+                          <select
+                            value={cell}
+                            onChange={(e) =>
+                              handleChange(rowIndex, colIndex, e.target.value)
+                            }
+                            className="w-full bg-gray-100 text-gray-900 p-2 text-center border border-gray-300 rounded-lg"
+                          >
+                            <option value="">{t("Select")}</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                          </select>
+                        ) : (
+                          <input
+                            type="text"
+                            value={cell}
+                            onChange={(e) =>
+                              handleChange(rowIndex, colIndex, e.target.value)
+                            }
+                            className="w-full bg-gray-100 text-gray-900 p-2 text-center border border-gray-300 rounded-lg"
+                          />
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+                <tr className="bg-blue-200 text-gray-800 text-center font-bold ">
+                  <td className="border-gray-300 px-4 py-3">
+                    {t("Total percentage")}
+                  </td>
+                  <td className="border-gray-300 px-4 py-3">
+                    {columnSums[0]} %
+                  </td>
+                  <td className="border-gray-300 px-4 py-3"></td>
+                  <td className="border-gray-300 px-4 py-3">
+                    {columnSums[1]} %
+                  </td>
+                  <td className="border-gray-300 px-4 py-3"></td>
+                  <td className="border-gray-300 px-4 py-3">
+                    {columnSums[2]} %
+                  </td>
+                  <td className="border-gray-300 px-4 py-3"></td>
+                  <td className="border-gray-300 px-4 py-3">
+                    {columnSums[3]} %
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </div>
-      )}
-    </div>
+
+          {/* Button */}
+          <div className="flex justify-center">
+            <button className="bg-blue-500 text-white px-8 py-4 rounded-lg text-xl shadow-md hover:bg-blue-600 transition">
+              Calculate
+            </button>
+          </div>
+        </form>
+
+        {/* Decision & Formula Results */}
+        {decision && (
+          <div className="text-center text-xl font-bold mt-6 bg-blue-100 p-5 border border-gray-300 rounded-lg shadow-md mb-6">
+            <p className="text-blue-700 text-2xl mb-3">{decision}</p>
+            <div className="mt-3 space-y-2 text-gray-700 text-lg">
+              {formula.map((line, index) => (
+                <p key={index} className="text-gray-800">
+                  {line}
+                </p>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </Layout>
   );
 };
 
