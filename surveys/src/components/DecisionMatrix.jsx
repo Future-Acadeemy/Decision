@@ -91,7 +91,9 @@ const DecisionMatrix = () => {
     setTotals({ decision1: sumDecision1, decision2: sumDecision2 });
 
     setFormula([
-      `Results of Criterion 1 = ${criterion1} → (Sum of Advantages - Disadvantages for Decision 1)`,
+      t(
+        `Results of Criterion 1 = ${criterion1} → (Sum of Advantages - Disadvantages for Decision 1)`
+      ),
       `Results of Criterion 2 = ${criterion2} → (Sum of Advantages - Disadvantages for Decision 2)`,
       `Results of Criterion 3 = ${criterion3} → (Sum of Advantages of Decision 1 - Advantages of Decision 2)`,
       `Results of Criterion 4 = ${criterion4} → (Sum of Disadvantages of Decision 2 - Disadvantages of Decision 1)`,

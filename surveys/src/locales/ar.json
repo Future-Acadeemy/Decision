@@ -7,6 +7,8 @@
     "Advantages": "المزايا",
     "Disadvantages": "العيوب",
     "Total percentage": "النسبة المئوية الإجمالية",
-    "Select": "اختار"
+    "Select": "اختار",
+    "Results of Criterion 1 = ": "نتائج المعيار الأول =",
+    "Results of Criterion one = ${criterion1} → (Sum of Advantages - Disadvantages for Decision one)": "نتائج المعيار الأول = ${criterion1} → (مجموع المزايا - العيوب للقرار الأول)"
   }
 }
