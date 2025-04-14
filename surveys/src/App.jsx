@@ -25,7 +25,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
-          <Route exact path="/" element={<Login />} />
+          <Route exact path="/" element={<DecisionMatrix />} />
           <Route path="/registeration" element={<Registeration />} />
           <Route path="/home" element={<Home />} />
           <Route path="/survey" element={<SurveyForm />} />
